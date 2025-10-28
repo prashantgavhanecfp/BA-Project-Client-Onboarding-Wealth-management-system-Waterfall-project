@@ -1,0 +1,29 @@
+ID,Category,Description,Measurement Criteria,Priority,Test Method,Owner,Status
+NFR-001,Performance,System shall respond to user login requests within 2 seconds (avg).,"Avg response time ? 2s over 15 min, p95 ? 3s, measured via JMeter/APM.",High,Load/Latency test (JMeter); APM dashboards,QA Lead,Open
+NFR-002,Performance,Document upload endpoint shall accept and acknowledge files within 3 seconds.,p95 ? 3s for files ?10MB across 500 concurrent users.,High,Load test with mixed payloads,QA Lead,Open
+NFR-003,Performance,KYC screening request shall return within 5 seconds under normal conditions.,p95 ? 5s; timeout 10s with 2 retries exponential backoff.,High,Integration performance test; fault injection,Tech Lead,Open
+NFR-004,Scalability,"Support at least 500 concurrent onboardings and 1,000 TPS across services.","Sustained 500 users, burst 1,000 TPS for 30 min without error >1%.",High,Scalability test; autoscaling verification,DevOps,Open
+NFR-005,Availability,Overall platform availability shall be ? 99.95%.,Monthly uptime report; scheduled maintenance excluded.,High,Synthetic monitoring; SLO reports,SRE,Open
+NFR-006,Security,All PII at rest shall be encrypted with AES?256; keys rotated quarterly.,DB/storage encryption enabled; KMS rotation logs verified.,High,Security config review; evidence in KMS/Kafka/S3,Security Officer,Open
+NFR-007,Security,All data in transit shall use TLS 1.3 with strong ciphers.,Qualys/SSL Labs score A or better; no weak ciphers.,High,Endpoint SSL scan; pen test,Security Officer,Open
+NFR-008,Security,Enforce MFA for RM/Admin roles; session timeout after 15 minutes idle.,MFA enabled; idle timeout policy verified in IdP.,High,Auth policy test; attempt idle expiration,Tech Lead,Open
+NFR-009,Security,Rate limiting shall prevent abuse on public APIs.,HTTP 429 when threshold exceeded; no resource exhaustion.,High,Abuse simulation; DDoS test (controlled),SRE,Open
+NFR-010,Compliance,"System shall comply with GDPR (consent, DSAR, right to erasure).",DSAR served ? 30 days; erasure workflow works; consent stored.,High,Process walkthrough; data lineage; audit checks,Compliance Officer,Open
+NFR-011,Compliance,FATCA/CRS data capture and reporting accuracy ? 99.5%.,Random sample audit; report validation vs. rules matrix.,High,Compliance QA; parallel run,Compliance Officer,Open
+NFR-012,Auditability,"All actions shall be logged with user, timestamp, IP, entity and outcome.",100% create/update/delete events in AuditLog; tamper?evident.,High,Audit trail verification; hashing check,QA Lead,Open
+NFR-013,Reliability,RPO ? 15 minutes and RTO ? 1 hour for critical services.,Backup frequency; DR runbook test results.,High,DR drill; restore validation,SRE,Open
+NFR-014,Observability,"Emit standardized metrics, logs and traces for all services.","Metrics: latency, errors, saturation; 100% services with tracing.",Medium,APM/Logging review; chaos day,SRE,Open
+NFR-015,Usability,WCAG 2.1 AA accessibility compliance for client-facing UI.,Accessibility audit pass; screen reader navigation OK.,Medium,"Accessibility testing; AXE, NVDA/JAWS",UX Lead,Open
+NFR-016,Localization,Support English at launch; framework ready for multilingual with i18n keys.,Text externalized; no hard?coded strings; locale switch.,Medium,Code review; UI smoke test,Frontend Lead,Open
+NFR-017,Maintainability,Microservices must have test coverage ? 80% lines/branches.,Coverage reports in CI; gating enabled.,Medium,CI coverage gate; code review,Tech Lead,Open
+NFR-018,Supportability,Mean time to detect (MTTD) ? 5 min; mean time to recover (MTTR) ? 30 min.,Alerting on SLO burn?rate; incident postmortems.,Medium,Incident drill; alert test,SRE,Open
+NFR-019,Performance,"UI pages (SPA) shall have LCP ? 2.5s on 4G, 95th percentile.",Web vitals in RUM; LCP ? 2.5s; CLS < 0.1.,Medium,"RUM (e.g., GA4/New Relic); Lighthouse",Frontend Lead,Open
+NFR-020,Data Retention,"KYC documents retained per policy (e.g., 7 years) with legal hold support.",Retention rules configured; delete/hold flows verified.,High,Policy review; retention tests,Compliance Officer,Open
+NFR-021,Interoperability,APIs follow OpenAPI 3.0; consistent error model and versioning.,OpenAPI published; backward?compatible changes only.,Medium,API contract test; schema linting,Tech Lead,Open
+NFR-022,Capacity,Document store sized for 5 TB Y1 with 30% headroom.,Capacity plan; storage alerts at 75/85/95%.,Medium,Capacity test; monitoring review,SRE,Open
+NFR-023,Privacy,Mask PII in non?prod and logs; use synthetic/anonymized data.,No raw PII in logs/non?prod; automated checks pass.,High,Log scan; data masking test,Security Officer,Open
+NFR-024,Error Handling,User?facing errors must be friendly with correlation IDs.,All 4xx/5xx responses include trace/correlation id.,Medium,API/UI error tests; log correlation,QA Lead,Open
+NFR-025,Queueing/Retry,Asynchronous jobs retry with backoff; DLQ on final failure.,Retry policy configured; DLQ monitored; alert on backlog.,Medium,Worker tests; failure injection,DevOps,Open
+NFR-026,Time/Clock,System uses UTC; time?zone rendering per user locale in UI.,DB timestamps in UTC; UI reflects locale formats.,Low,DB/UX verification,Tech Lead,Open
+NFR-027,Security,Secrets managed in vault; no secrets in code or CI logs.,Secret scanning clean; vault access audited.,High,SAST/Secret scan; vault audit,Security Officer,Open
+NFR-028,Availability,Graceful degradation when external vendors fail.,Feature flags/fallbacks verified; user messaging clear.,High,Chaos testing; vendor outage simulation,SRE,Open

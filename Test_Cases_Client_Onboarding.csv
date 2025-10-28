@@ -1,0 +1,69 @@
+Test Case ID,Title,Related Requirement IDs,Module / Use Case,Pre-Conditions,Test Steps,Test Data,Expected Result,Priority (MoSCoW),Test Type,Actual Result,Status (Pass/Fail/Blocked),Defect ID / Notes,
+TC-UC001-01,Mandatory fields validation,"BR-001, FR-001, SRS-004",UC-001 Submit Data,User registered & logged in; Onboarding session active,"1. Open Personal Info page
+2. Leave mandatory fields blank
+3. Click Next","Name='', DOB='', Address=''",Error messages shown for each mandatory field; cannot proceed,Must,Functional,,,,
+TC-UC001-02,Valid data submission,"BR-001, FR-001",UC-001 Submit Data,User registered & logged in,"1. Fill all mandatory fields
+2. Click Save Draft
+3. Click Next","Name='John Doe', DOB='1990-01-01', Address='123 Main St'",Draft saved; section marked Complete; proceeds to next step,Must,Functional,,,,
+TC-UC001-03,Multi-language labels and formats,"FR-001, FR-003",UC-001 Submit Data,"System configured with EN, FR locales","1. Switch to FR locale
+2. Verify labels and date format
+3. Submit form",Locale='FR',All labels in French; date format DD/MM/YYYY; submission succeeds,Should,Localization,,,,
+TC-UC004-01,Save draft and resume by link,FR-004,UC-004 Save & Resume,Onboarding started,"1. Enter partial data
+2. Click Save Draft
+3. Close session
+4. Reopen via Resume link",Partial profile data,Form state restored to last save point,Must,Functional,,,,
+TC-UC004-02,Draft expiry after 30 days,FR-004,UC-004 Save & Resume,Draft created >30 days ago,1. Open resume link for expired draft,Expired draft,System shows 'Draft expired' and offers to start new,Should,Functional,,,,
+TC-UC005-01,Accept valid file formats and size,FR-005,UC-005 Upload Documents,Personal info completed,"1. Upload JPG, PNG, PDF ≤10MB
+2. Observe status","JPG=2MB, PNG=1MB, PDF=5MB",All files accepted and stored; status shows ✓,Must,Functional,,,,
+TC-UC005-02,Reject invalid formats or oversize,FR-005,UC-005 Upload Documents,Personal info completed,"1. Upload EXE or PDF >10MB
+2. Observe error","EXE, PDF=25MB",System rejects with clear error message; no storage,Must,Negative,,,,
+TC-UC006-01,OCR extraction populates fields,FR-006,UC-006 OCR Extraction,Valid document uploaded,"1. Trigger OCR
+2. Review extracted fields",Passport.jpg,Key fields auto-filled; confidence displayed,Must,Functional,,,,
+TC-UC006-02,Low confidence triggers manual review,FR-006,UC-006 OCR Extraction,Blurry document uploaded,"1. Trigger OCR
+2. Observe confidence <80%",Blurred ID image,System flags for manual verification,Should,Functional,,,,
+TC-UC007-01,Duplicate document flagging,FR-007,UC-007 Duplicate Check,Same document already in repository,1. Upload same file again,PAN.pdf (existing),System flags as duplicate; prevents duplicate storage; alerts Ops,Must,Functional,,,,
+TC-UC008-01,Successful KYC screening,"BR-002, FR-008, SRS-003",UC-008 AML/KYC Screening,Profile + docs submitted; API available,"1. Trigger screening
+2. Wait for result",Clean client,Status = Passed; audit log recorded,Must,Integration,,,,
+TC-UC008-02,API timeout with retries,"FR-008, SRS-004",UC-008 AML/KYC Screening,Compliance API unstable,"1. Trigger screening when API times out
+2. Observe retries (x3)",Simulated timeout,"System retries with backoff; on failure, tech exception created",Must,Resilience,,,,
+TC-UC008-03,PEP match escalates to EDD,"FR-008, FR-009",UC-008 AML/KYC Screening,Client in PEP list,"1. Trigger screening
+2. Review outcome",Client=PEP,EDD workflow initiated; Ops/Compliance notified,Must,Functional,,,,
+TC-UC010-01,Sanctions match blocks onboarding,FR-010,UC-010 Sanctions Validation,Client matches OFAC/UN list,1. Run sanctions check,Flagged client,Onboarding blocked; case created; notification sent,Must,Functional,,,,
+TC-UC011-01,All questions must be answered,FR-011,UC-011 Risk Questionnaire,Questionnaire launched,"1. Answer some questions
+2. Try to submit",Partial answers,System prompts to complete all mandatory questions,Must,Functional,,,,
+TC-UC011-02,Skip logic & branching works,FR-011,UC-011 Risk Questionnaire,Questionnaire with conditional sections,"1. Select 'Derivatives experience=No'
+2. Verify advanced section hidden",Derivatives=No,Conditional sections hidden; no validation errors,Should,Functional,,,,
+TC-UC012-01,Score computation into category,FR-012,UC-012 Auto Risk Scoring,Questionnaire submitted,"1. Submit answers that map to 'Balanced'
+2. Verify score and category",Preset answers,Score within Balanced range; category shown & persisted,Must,Functional,,,,
+TC-UC013-01,All mandatory consents required,FR-013,UC-013 Digital Consent,Profile complete; on Consent page,"1. Leave one consent unticked
+2. Click Next",Leave GDPR unchecked,System blocks progress; shows specific message,Must,Functional,,,,
+TC-UC013-02,Consent audit trail stored,"FR-013, SRS-003",UC-013 Digital Consent,Consents ticked,"1. Submit consents
+2. Review audit log",N/A,Consent timestamp/IP/user stored in AuditLog,Must,Security/Audit,,,,
+TC-UC014-01,Successful e‑sign flow,FR-014,UC-014 e‑Sign,Consent captured; e‑Sign provider available,"1. Send envelope
+2. Complete signature
+3. Return to app",Doc package,Signed docs stored; status=Signed; audit captured,Must,Integration,,,,
+TC-UC014-02,Signature failure and retry,FR-014,UC-014 e‑Sign,Provider responds with failure,"1. Attempt sign
+2. Receive failure
+3. Retry within limit",Simulated failure,"Retry up to 3x; on final fail, mark as Failed & notify",Should,Resilience,,,,
+TC-UC015-01,Account created successfully,"BR-005, FR-015",UC-015 Account Opening,All approvals complete; core API available,"1. Submit account create request
+2. Receive success response",New client payload,Account number returned; status Active; confirmation sent,Must,Integration,,,,
+TC-UC015-02,Core banking failure routes to Ops,"FR-015, FR-016",UC-015 Account Opening,Core API fails,"1. Submit account create request
+2. Receive error
+3. Check Ops queue",Simulated error,Case created in Ops; client notified of delay,Must,Exception/Workflow,,,,
+TC-UC017-01,Successful CRM sync,FR-017,UC-017 CRM Sync,Client activated,"1. Trigger CRM sync
+2. Verify client appears in Salesforce",Client ID,CRM updated; sync status=Success,Should,Integration,,,,
+TC-UC017-02,CRM sync retry on failure,"FR-017, SRS-004",UC-017 CRM Sync,CRM API unstable,"1. Trigger sync when API times out
+2. Observe retries & job creation",Timeout,Retry with backoff; create retry job; alert logged,Should,Resilience,,,,
+TC-UC018-01,View and filter exception queues,FR-018,UC-018 Ops Dashboard,Exceptions exist,"1. Open dashboard
+2. Filter by 'KYC' queue",N/A,Filtered list displays KYC exceptions only,Could,Functional,,,,
+TC-UC018-02,SLA breach escalation,"FR-018, SRS-003",UC-018 Ops Dashboard,Exception older than SLA threshold,"1. Open exception item beyond SLA
+2. Check escalation event",Aging exception,Escalation to manager; audit event recorded,Should,Workflow,,,,
+TC-Perf-01,Throughput under peak load,"SRS-001, SRS-004",NFR – Performance,Performance environment available,"1. Run 500 concurrent sessions for 15 min
+2. Monitor response times",JMeter plan,≥95% requests ≤3s; no errors >1%,Must,Performance,,,,
+TC-Perf-02,API latency baseline,SRS-004,NFR – Performance,APIs deployed,1. Measure p50/p95 latency under nominal load,Postman/JMeter,"p50 ≤ 1.5s, p95 ≤ 3s",Must,Performance,,,,
+TC-Sec-01,PII encryption at rest,SRS-002,NFR – Security,DB with PII,"1. Inspect DB storage
+2. Verify AES-256 at rest",N/A,Encryption verified; keys managed/rotated,Must,Security,,,,
+TC-Sec-02,Transport security TLS 1.3,SRS-002,NFR – Security,Deployed environment,"1. Scan endpoints
+2. Verify TLS 1.3 + strong ciphers",SSL scan,TLS 1.3 enforced; no weak ciphers,Must,Security,,,,
+TC-Avail-01,Service availability & health checks,SRS-001,NFR – Availability,K8s cluster with probes,"1. Simulate pod crash
+2. Verify auto-restart and health probe behavior",Chaos test,Service self-heals; uptime targets maintained,Should,Reliability,,,,

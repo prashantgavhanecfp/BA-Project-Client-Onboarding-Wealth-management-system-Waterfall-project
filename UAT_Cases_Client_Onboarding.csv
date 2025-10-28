@@ -1,0 +1,31 @@
+UAT Case ID,Business Scenario,Precondition,Steps,Expected Result,Actual Result,Status (Pass/Fail),Sign-Off (User Initials)
+UAT-001,New client enters personal info,User logged in,"1. Open onboarding form
+2. Enter valid details
+3. Save & Next",Data saved; proceeds to next step,,,
+UAT-002,Save draft and resume onboarding,Client started onboarding,"1. Enter partial info
+2. Save draft
+3. Resume via link",Draft restored with saved data,,,
+UAT-003,Upload KYC documents,Client info completed,"1. Upload PAN/Passport
+2. Submit",Docs stored; OCR auto-fills fields,,,
+UAT-004,OCR auto-fills client details,Valid ID uploaded,"1. Upload Passport
+2. Trigger OCR",Fields auto-filled from OCR,,,
+UAT-005,Check duplicate documents,Document already exists in DMS,1. Upload same PAN again,System flags duplicate; alerts Ops,,,
+UAT-006,Run KYC/AML screening,Docs uploaded,1. Trigger screening,Status = Passed/Flagged; logs stored,,,
+UAT-007,AML screening PEP case,Client is Politically Exposed Person,1. Trigger KYC screening,System escalates to EDD workflow,,,
+UAT-008,Sanctions check blocks onboarding,Client in sanctions list,1. Run sanctions check,Onboarding blocked; Compliance alerted,,,
+UAT-009,Risk questionnaire completion,Client profile created,"1. Fill questionnaire
+2. Submit",Risk score calculated; stored in profile,,,
+UAT-010,Auto risk scoring category,Questionnaire submitted,1. Submit answers mapping to 'Balanced',Score category = Balanced,,,
+UAT-011,Capture client consents,Profile complete,"1. Tick mandatory consents
+2. Submit",All consents captured; audit logged,,,
+UAT-012,Perform e-Sign of agreements,Consent given,"1. Send mandate for signature
+2. Client signs",Signed docs stored in DMS,,,
+UAT-013,Account creation post approval,All approvals complete,1. Submit account creation request,Account number generated; CRM updated,,,
+UAT-014,Core banking error escalation,Core API fails,"1. Submit account request
+2. Observe error",Ops queue created; client notified,,,
+UAT-015,CRM sync after onboarding,Client activated,1. Trigger CRM sync,CRM updated with client profile,,,
+UAT-016,Ops dashboard exception view,Exceptions exist,"1. Open dashboard
+2. Filter queue",Filtered exception list displayed,,,
+UAT-017,Ops dashboard SLA escalation,Exception older than SLA,1. View aging exception,Escalation triggered; manager alerted,,,
+UAT-018,Final confirmation & dashboard view,Client onboarding complete,"1. Login
+2. View dashboard",Account confirmed; next steps shown,,,

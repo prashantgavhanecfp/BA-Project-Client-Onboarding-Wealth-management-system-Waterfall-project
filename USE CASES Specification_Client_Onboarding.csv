@@ -1,0 +1,24 @@
+Use Case ID & Title,Actors Involved,Preconditions,Postconditions,Basic Flow (Main Scenario),Alternative Flows,Business Rules & Constraints,Wireframes or UI References,Assumptions & Dependencies
+UC-001: Submit Personal & Financial Data,"Client, RM","User authenticated, onboarding initiated",Client profile created with basic personal/financial data,"1. Client enters personal/financial info
+2. RM assists (if HNWI)
+3. Data saved","Invalid/missing data ? prompt re-entry
+System downtime ? retry","Mandatory fields validation, data format checks",Data entry form (web/mobile),"Client device, CRM availability"
+UC-002: Validate Mandatory Fields,System,Client has entered data,Validated profile ready,System checks all required fields,Missing field ? error message,Field-level validation rules,Form validation UI,Depends on UC-001
+UC-003: Multi-language Support,Client,System language set,Data captured in chosen language,Client selects language ? form adjusts,Language not supported ? default to English,"Translation rules, supported locales",Language selector screen,Depends on UC-001
+UC-004: Save & Resume,Client,User started onboarding,Draft saved for later completion,Client clicks 'Save Draft' ? data stored,Session timeout ? restore from last save,Draft retention max 30 days,Save/Resume buttons,Storage service required
+UC-005: Upload Documents,Client,Personal info submitted,Documents stored in DMS,Client uploads ID proofs,"Invalid file format ? error
+Timeout ? retry upload","Allowed formats JPG/PNG/PDF, max size 10MB",Upload page with file picker,DMS & OCR dependency
+UC-006: OCR Extraction,System,Document uploaded,Extracted data populated in form,System runs OCR engine,Low confidence ? manual check,Accuracy threshold 80%,OCR preview screen,OCR API required
+UC-007: Duplicate Document Detection,System,Document uploaded,Duplicate flagged,System compares uploaded IDs,If duplicate found ? alert ops,Hashing for duplicates,Duplicate alert UI,Depends on UC-005
+UC-008: AML/KYC Screening,"System, Compliance API",Profile & docs submitted,Client screened,System sends data to compliance API,"API timeout ? retry
+PEP match ? escalate",Must meet AML/KYC regulations,KYC check screen,Integration with API
+UC-009: PEP Flagging,"System, Compliance API",AML/KYC screening running,PEP flagged,API cross-checks PEP list,False positives ? manual review,PEP list updates required,PEP alert UI,Depends on UC-008
+UC-010: Sanctions Validation,"System, Compliance API",AML/KYC screening running,Sanction flagged,API checks sanctions lists,False positives ? manual review,OFAC/UN/EU lists mandatory,Sanction alert UI,Depends on UC-008
+UC-011: Risk Questionnaire,"Client, RM",Client accepted onboarding,Risk profile submitted,Client completes questionnaire,Incomplete answers ? prompt,Scoring logic defined,Questionnaire UI,Depends on UC-001
+UC-012: Auto Risk Scoring,System,Questionnaire completed,Risk score assigned,System calculates score,Ambiguous answers ? default to Balanced,"Score buckets: Conservative, Balanced, Aggressive",Score display UI,Depends on UC-011
+UC-013: Digital Consent,Client,Profile completed,Consent captured,Client checks consent box,Consent not given ? block onboarding,GDPR/FATCA compliance,Consent form screen,CRM dependency
+UC-014: e-Sign Agreements,"Client, e-Sign Provider",Consent captured,Signed agreements stored,Client signs via provider,Signature failure ? retry,e-Sign legal compliance,e-Signature screen,DocuSign/Adobe Sign dependency
+UC-015: Auto Account Opening,"System, Core Banking",All approvals completed,Account created,System sends data to core banking,API failure ? retry/manual,Must meet account creation rules,Account confirmation UI,Core banking dependency
+UC-016: Handle Exceptions,Ops,Error occurred,Exception resolved,Ops reviews flagged case,Escalation if unresolved,Ops SLAs defined,Ops dashboard,Depends on UC-008/015
+UC-017: CRM Sync,"System, CRM",Client activated,Data synced to CRM,System pushes profile to CRM,Sync failure ? retry later,CRM sync rules,CRM dashboard,CRM dependency
+UC-018: Ops Exception Dashboard,Ops,Client onboarding running,Exceptions monitored,Ops reviews dashboard,Ops inaction ? SLA breach,Audit trail compliance,Ops dashboard UI,Depends on UC-016

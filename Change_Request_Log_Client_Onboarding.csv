@@ -1,0 +1,6 @@
+Change Request ID,Change Request Description,Raised On,Raised By,Status,Type of Change,Effort Estimation,Assigned To,Scheduled Start Date,Scheduled End Date,Actual Start Date,Actual End Date,Final Status
+CR-001,Add multi-language support for onboarding forms,2025-09-01,Business Team,Open,Functional/UI,40 hrs,Frontend Dev,2025-09-10,2025-09-20,,,Pending
+CR-002,Update KYC vendor API endpoint as per new compliance SLA,2025-09-02,Compliance Officer,In Progress,Integration/Regulatory,24 hrs,Backend Dev,2025-09-05,2025-09-07,2025-09-05,,Ongoing
+CR-003,Add escalation workflow in Ops Dashboard for SLA breaches,2025-09-03,Operations Manager,Open,Functional/Workflow,32 hrs,Full-stack Dev,2025-09-12,2025-09-18,,,Pending
+CR-004,Enhance encryption algorithm to meet new GDPR guidelines,2025-09-04,Security Officer,Open,Non-Functional/Security,50 hrs,Security Engineer,2025-09-15,2025-09-25,,,Pending
+CR-005,Add audit log export functionality for compliance review,2025-09-05,Compliance Officer,Closed,Functional/Reporting,20 hrs,Backend Dev,2025-08-20,2025-08-25,2025-08-20,2025-08-25,Implemented

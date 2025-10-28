@@ -1,0 +1,22 @@
+Term,Definition,Source/Reference,Usage in System
+Client ID,Unique identifier assigned to each client (UUID).,"BRD, ERD","Primary key for client entity; used in CRM, Core Banking, and Audit Log."
+KYC,Know Your Customer: Regulatory process to verify identity and address.,Regulatory (AML/KYC Act),Mandatory step before account opening; validated via documents and screening APIs.
+AML,Anti-Money Laundering: Screening against suspicious activity lists.,"FATF, RBI, FinCEN",Integrated screening during onboarding; API with Refinitiv/World-Check.
+PEP,Politically Exposed Person requiring enhanced due diligence (EDD).,"FATF, Compliance Policy",Screening flag triggers EDD workflow and Ops review.
+EDD,"Enhanced Due Diligence: Additional checks for high-risk clients (PEP, sanctions hit).",AML/KYC Policy,Escalation workflow in Ops Dashboard.
+FATCA,Foreign Account Tax Compliance Act: US law requiring disclosure of foreign accounts.,"IRS, Compliance",Tax residency form collected during onboarding.
+CRS,Common Reporting Standard: OECD global standard for tax reporting.,"OECD, Compliance",Captured alongside FATCA in tax documentation module.
+TIN,Tax Identification Number: National identifier used for tax purposes.,Compliance Docs,Captured in FATCA/CRS forms; validated for format.
+Consent,Explicit permission given by client to process data and documents.,"GDPR, PIPEDA","Captured digitally with timestamp, IP, and signature in Consent module."
+e-Signature,Legally valid electronic signature (DocuSign/AdobeSign API).,eSign Regulations,Used to sign account opening forms and agreements.
+OCR,Optical Character Recognition: Auto-extract fields from scanned documents.,Tech Spec,Used in document upload module for PAN/Passport extraction.
+Document ID,Unique identifier for uploaded documents.,"ERD, DMS Spec",Stored in Document Management System; linked to Client ID.
+Risk Score,Numeric value representing client’s investment risk profile.,"FRD, Risk Engine","Calculated from questionnaire; mapped to categories (Conservative, Balanced, Aggressive)."
+CRM,"Customer Relationship Management system (e.g., Salesforce).",Business Process,"Stores client profile, contact history; sync with onboarding system."
+Core Banking ID,Unique account identifier in core banking system.,Core Banking Spec,Returned upon successful account creation.
+Ops Dashboard,Internal tool for operations team to track exceptions and escalations.,"FRD, Wireframes","Displays pending KYC checks, SLA breaches, escalations."
+Audit Log,"Immutable record of user/system actions (who, what, when, where).","SRS, Compliance","Used for regulatory audits; stored with timestamp, user ID, IP."
+UAT,User Acceptance Testing: Final testing phase validating system with business users.,Test Plan,"UAT Plan, Cases, and Sign-Off tracked before go-live."
+GDPR,General Data Protection Regulation: EU privacy regulation.,Regulatory,"Governs consent, data retention, anonymization."
+RPO,Recovery Point Objective: Maximum data loss allowed (time-based).,DR Policy,Defined as ?15 minutes for onboarding data.
+RTO,Recovery Time Objective: Time within which service must be restored.,DR Policy,Defined as ?60 minutes for onboarding platform.
